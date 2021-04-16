@@ -1,0 +1,10 @@
+{
+  "extends": ["@html-validate"],
+
+  "overrides": [
+    {
+      "files": "*.vue",
+      "extends": ["@html-validate/vue"]
+    }
+  ]
+}

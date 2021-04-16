@@ -1,9 +1,11 @@
 <template>
-    <div>
+    <div class="content">
+      <button class="add-to-cart" @click="addToCart()">AddtoCart</button>
     <div class="top-row">
       <div class="top part">
         <div class="robot-name">
           {{selectedRobot.head.title}}
+          <span v-if="selectedRobot.head.onSale" class="sale">Sale!</span>
         </div>
         <img :src="selectedRobot.head.src" title="head">
         <button @click="selectPreviousHead()" class="prev-selector">&#9668;</button>
@@ -74,6 +76,10 @@ export default {
     },
   },
   methods: {
+    addToCart(){
+      const robot = this.selectedRobot
+      const cost = 
+    },
     selectNextHead() {
       this.selectedHeadIndex = getNextValidIndex(
         this.selectedHeadIndex,
@@ -232,6 +238,19 @@ export default {
   top: -25px;
   text-align: center;
   width: 100%;
+}
+.sale{
+  color: red;
+}
+.content{
+  position: relative;
 
+}
+.add-to-cart{
+  position: absolute;
+  right: 30px;
+  width: 220px ;
+  padding: 3px;
+  font-size: 16px;
 }
 </style>

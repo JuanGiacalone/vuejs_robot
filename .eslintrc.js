@@ -6,6 +6,7 @@ module.exports = {
   extends: [
     'plugin:vue/essential',
     '@vue/airbnb',
+    "@html-validate"
   ],
   parserOptions: {
     parser: 'babel-eslint',
@@ -15,4 +16,5 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'linebreak-style': 0,
   },
+  
 };

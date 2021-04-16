@@ -7,12 +7,10 @@
 	"settings": {
 
 		"eslint.validate": [
-
-            {"language": "html"}, {"language": "vue"}, {"language": "javascript"},
-
-
+            {"language": "html"},
+			 {"language": "vue"},
+			  {"language": "javascript"},
 		],
-		"eslint.autoFixOnSave": true,
 		"editor.codeActionsOnSave": {
 			"source.fixAll.eslint": true
 		}
