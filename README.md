@@ -22,3 +22,10 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+: is a v-bind replacement
+
+@ is a v-on replacement
+
+use v-once to update only once a div.
