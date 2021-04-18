@@ -1,8 +1,8 @@
 <template>
     <div class="content">
-      <button class="add-to-cart" @click="addToCart()">AddtoCart</button>
+      <button class="add-to-cart" @click="addToCart()">Add to Cart</button>
     <div class="top-row">
-      <div class="top part">
+      <div :class="[saleBorderClass, 'top', 'part']">
         <div class="robot-name">
           {{selectedRobot.head.title}}
           <span v-if="selectedRobot.head.onSale" class="sale">Sale!</span>
@@ -36,6 +36,23 @@
         <button @click="selectNextBase()" class="next-selector">&#9658;</button>
       </div>
     </div>
+    <div>
+      <h1>Cart</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Robot</th>
+            <th class="cost">Cost</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(createdRobot,index) in cart" :key="index">
+            <td>{{createdRobot.head.title}}</td>
+            <td class="cost">{{createdRobot.cost}}</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
   </div>
 </template>
 
@@ -57,6 +74,7 @@ export default {
   data() {
     return {
       availableParts,
+      cart: [],
       selectedHeadIndex: 0,
       selectedLeftArmIndex: 0,
       selectedTorsoIndex: 0,
@@ -65,6 +83,9 @@ export default {
     };
   },
   computed: {
+    
+    saleBorderClass() {
+      return  this.selectedRobot.head.onSale ? 'sale-border' : ''},
     selectedRobot() {
       return {
         head: availableParts.heads[this.selectedHeadIndex],
@@ -72,13 +93,20 @@ export default {
         rightArm: availableParts.arms[this.selectedRightArmIndex],
         torso: availableParts.torsos[this.selectedTorsoIndex],
         base: availableParts.bases[this.selectedBaseIndex],
+        cost: null,
       };
     },
   },
   methods: {
     addToCart(){
-      const robot = this.selectedRobot
-      const cost = 
+      const robot = this.selectedRobot;
+      
+      robot.cost = robot.head.cost + robot.leftArm.cost + 
+      robot.rightArm.cost + robot.torso.cost + 
+      robot.base.cost;
+      console.log(robot.cost);
+      const createdRobot = Object.create(robot)
+      this.cart.push(createdRobot);
     },
     selectNextHead() {
       this.selectedHeadIndex = getNextValidIndex(
@@ -152,8 +180,11 @@ export default {
   border: 3px solid #aaa;
 }
 .part img {
+  
   width:165px;
+  
 }
+ 
 .top-row {
   display:flex;
   justify-content: space-around;
@@ -252,5 +283,16 @@ export default {
   width: 220px ;
   padding: 3px;
   font-size: 16px;
+}
+td, th {
+  text-align: left;
+  padding: 5px;
+  padding-right: 20px;
+}
+.cost{
+  text-align: right;
+}
+.sale-border{
+  border: 3px solid red;
 }
 </style>
