@@ -47,10 +47,14 @@ deep styling a subclass (/deep/ )
 }
 
 conditional style classes, headborderStyle is a computed function that returns a CSS line
-<div class="top part" :style="headBorderStyle">
+" <div class="top part" :style="headBorderStyle"> "
 
 conditional CLASS (sale-border IF the HEAD.onSale exists)
-<div class="top part" :class="{'sale-border' : selectedRobot.head.onSale}">
+" <div class="top part" :class="{'sale-border' : selectedRobot.head.onSale}"> "
 
 conditional class returned from a computed function with top-part as defaults
-<div :class="[saleBorderClass, 'top', 'part']">
+
+" <div :class="[saleBorderClass, 'top', 'part']"> "
+
+
+Instance Lifecycle : lifeclycle diagram (read more)
