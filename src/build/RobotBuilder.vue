@@ -1,6 +1,26 @@
 <template>
     <div class="content">
+      
+      <div class="preview">
+        <CollapsibleSection>
+        
+      <div class="preview-content">
+        <div class="top-row">
+          <img :src="selectedRobot.head.src"/>
+        </div>
+        <div class="middle-row">
+          <img :src="selectedRobot.leftArm.src" class="rotate-left"/>
+          <img :src="selectedRobot.torso.src"/>
+          <img :src="selectedRobot.rightArm.src" class="rotate-right"/>
+        </div>
+        
+        <div class="bottom-row">
+          <img :src="selectedRobot.base.src"/>
+        </div>
+      </div>
+      </CollapsibleSection>
       <button class="add-to-cart" @click="addToCart()">Add to Cart</button>
+    </div>
     <div class="top-row">
 
       <PartSelector :parts="availableParts.heads" 
@@ -45,9 +65,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(createdRobot,index) in cart" :key="index">
-            <td>{{createdRobot.head.title}}</td>
-            <td class="cost">{{createdRobot.cost}}</td>
+          <tr v-for="(robot,index) in cart" :key="index">
+            <td>{{robot.head.title}}</td>
+            <td class="cost">{{robot.cost}}</td>
           </tr>
         </tbody>
       </table>
@@ -59,16 +79,17 @@
 import availableParts from '../data/parts'
 import createdHookMixin from './created-hook-mixin'
 import PartSelector from './PartSelector.vue'
+import CollapsibleSection from '../shared/CollapsibleSection.vue'
 
 
 export default {
   
   name: 'RobotBuilder',
-  components: { PartSelector },
+  components: { PartSelector, CollapsibleSection },
   data() {
     return {
       availableParts,
-      cart: [],
+      cart: {},
        selectedRobot: {
         head: {},
         leftArm: {},
@@ -93,9 +114,7 @@ export default {
       robot.cost = robot.head.cost + robot.leftArm.cost + 
       robot.rightArm.cost + robot.torso.cost + 
       robot.base.cost;
-      console.log(robot.cost);
-      const createdRobot = Object.create(robot)
-      this.cart.push(createdRobot);
+      this.cart.push(Object.assign.apply(robot,robot));
     },
   },
 };
@@ -208,8 +227,8 @@ export default {
 }
 .add-to-cart{
   position: absolute;
-  right: 30px;
-  width: 220px ;
+  
+  width: 230px ;
   padding: 3px;
   font-size: 16px;
 }
@@ -223,5 +242,27 @@ td, th {
 }
 .sale-border{
   border: 3px solid red;
+}
+.preview {
+  position: absolute;
+  top: -20px;
+  right: 0;
+  width: 230px;
+  height: 230px;
+  padding: 5px;
+  
+}
+.preview-content {
+  border: 2px solid #999;
+}
+.preview img {
+  width: 75px;
+  height: 75px;
+}
+.rotate-right {
+  transform: rotate(90deg);
+}
+.rotate-left {
+  transform: rotate(-90deg);
 }
 </style>
