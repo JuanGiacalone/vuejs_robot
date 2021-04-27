@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div>
-      <img class="robot" src="../assets/robot-home.png" aria-hidden="true">
+      <img class="robot" src="../assets/robot-home.png" aria-hidden="true" />
     </div>
     <div class="get-started">
       <router-link to="/build">Get Started</router-link> building your robot!
@@ -11,19 +11,19 @@
 
 <script>
 export default {
-  name: 'HomePage',
+  name: "HomePage",
   props: {
-    msg: String,
-  },
+    msg: String
+  }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.home{
+.home {
   text-align: center;
 }
-.robot{
+.robot {
   height: 300px;
 }
 </style>

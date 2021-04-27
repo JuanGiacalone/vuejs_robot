@@ -1,18 +1,18 @@
 <template>
-    <div class="sidebar">
-        Build sidebar
-    </div>
+  <div class="sidebar">
+    Build sidebar
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'Standard',
+  name: "Standard"
 };
 </script>
 
 <style scoped>
-    .sidebar{
-        font-size: 50px;
-        transform: rotate(90deg);
-    }
+.sidebar {
+  font-size: 50px;
+  transform: rotate(90deg);
+}
 </style>

@@ -1,35 +1,33 @@
 <template>
+  <div>
+    <h1>{{ part.title }}</h1>
     <div>
-        <h1>{{ part.title }}</h1>
-        <div>
-            {{ part.description }}
-        </div>
+      {{ part.description }}
     </div>
+  </div>
 </template>
 
 <script>
-import parts from '../data/parts';
+import parts from "../data/parts";
 
 export default {
+  name: "PartInfo",
+  props: {
+    partType: { type: String },
+    id: {
+      type: [Number, String],
+      validator(value) {
+        return Number.isInteger(Number(value));
+      }
+    }
+  },
+  computed: {
+    part() {
+      const { partType, id } = this.$route.params;
 
-    name: 'PartInfo',
-    props: {
-        partType: {type: String},
-        id: {
-            type: [Number, String],
-            validator(value){
-                return Number.isInteger(Number(value));
-            },
-        },
-    },
-    computed: {
-        part(){
-            const { partType, id } = this.$route.params;
-
-            // +id casts an string to inr
-            return parts[partType].find(part => part.id === +id);
-        },
-    },
-    
+      // +id casts an string to inr
+      return parts[partType].find(part => part.id === +id);
+    }
+  }
 };
 </script>

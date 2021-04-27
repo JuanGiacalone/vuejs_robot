@@ -1,31 +1,30 @@
 <template>
-    <div class="content">
-      
-      <div class="preview">
-        <CollapsibleSection>
-        
-      <div class="preview-content">
-        <div class="top-row">
-          <img :src="selectedRobot.head.src"/>
+  <div class="content">
+    <div class="preview">
+      <CollapsibleSection>
+        <div class="preview-content">
+          <div class="top-row">
+            <img :src="selectedRobot.head.src" />
+          </div>
+          <div class="middle-row">
+            <img :src="selectedRobot.leftArm.src" class="rotate-left" />
+            <img :src="selectedRobot.torso.src" />
+            <img :src="selectedRobot.rightArm.src" class="rotate-right" />
+          </div>
+
+          <div class="bottom-row">
+            <img :src="selectedRobot.base.src" />
+          </div>
         </div>
-        <div class="middle-row">
-          <img :src="selectedRobot.leftArm.src" class="rotate-left"/>
-          <img :src="selectedRobot.torso.src"/>
-          <img :src="selectedRobot.rightArm.src" class="rotate-right"/>
-        </div>
-        
-        <div class="bottom-row">
-          <img :src="selectedRobot.base.src"/>
-        </div>
-      </div>
       </CollapsibleSection>
       <button class="add-to-cart" @click="addToCart()">Add to Cart</button>
     </div>
     <div class="top-row">
-
-      <PartSelector :parts="availableParts.heads" 
-      position="top"
-      @partSelected="part => selectedRobot.head=part"/>
+      <PartSelector
+        :parts="availableParts.heads"
+        position="top"
+        @partSelected="part => (selectedRobot.head = part)"
+      />
       <!-- <div :class="[saleBorderClass, 'top', 'part']">
          <div class="robot-name">
           {{selectedRobot.head.title}}
@@ -33,49 +32,51 @@
           class="sale">Sale!</span>
         </div> -->
       <!-- </div> -->
-      
     </div>
     <div class="middle-row">
-      <PartSelector 
-      :parts="availableParts.arms" 
-      position="left"
-      @partSelected="part => selectedRobot.leftArm=part"/>
-      <PartSelector 
-      :parts="availableParts.torsos" 
-      position="center"
-      @partSelected="part => selectedRobot.torso=part"/>
-      <PartSelector 
-      :parts="availableParts.arms" 
-      position="right"
-      @partSelected="part => selectedRobot.rightArm=part"/>
+      <PartSelector
+        :parts="availableParts.arms"
+        position="left"
+        @partSelected="part => (selectedRobot.leftArm = part)"
+      />
+      <PartSelector
+        :parts="availableParts.torsos"
+        position="center"
+        @partSelected="part => (selectedRobot.torso = part)"
+      />
+      <PartSelector
+        :parts="availableParts.arms"
+        position="right"
+        @partSelected="part => (selectedRobot.rightArm = part)"
+      />
     </div>
     <div class="bottom-row">
-      <PartSelector 
-      :parts="availableParts.bases" 
-      position="bottom"
-      @partSelected="part => selectedRobot.base=part"/>
+      <PartSelector
+        :parts="availableParts.bases"
+        position="bottom"
+        @partSelected="part => (selectedRobot.base = part)"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import availableParts from '../data/parts'
-import createdHookMixin from './created-hook-mixin'
-import PartSelector from './PartSelector.vue'
-import CollapsibleSection from '../shared/CollapsibleSection.vue'
-
+import availableParts from "../data/parts";
+import createdHookMixin from "./created-hook-mixin";
+import PartSelector from "./PartSelector.vue";
+import CollapsibleSection from "../shared/CollapsibleSection.vue";
 
 export default {
-  
-  name: 'RobotBuilder',
-  beforeRouteLeave(to, from, next){
-    if (this.addedToCart){
+  name: "RobotBuilder",
+  beforeRouteLeave(to, from, next) {
+    if (this.addedToCart) {
       next(true);
     } else {
       /* eslint no-alert: 0 */
-      /* eslint no-restricted-globals:0 */ 
-      const response = confirm('You have not added your robot! U Sure u Leaving?')
-      next(response)
+      /* eslint no-restricted-globals:0 */
+
+      const response = confirm("You have not added your robot! U Sure u Leaving?");
+      next(response);
     }
   },
   components: { PartSelector, CollapsibleSection },
@@ -84,60 +85,58 @@ export default {
       availableParts,
       addedToCart: false,
       cart: [],
-       selectedRobot: {
+      selectedRobot: {
         head: {},
         leftArm: {},
         rightArm: {},
         torso: {},
-        base: {},
-      },
+        base: {}
+      }
     };
   },
   mixins: [createdHookMixin],
   computed: {
-    
     saleBorderClass() {
-      return  this.selectedRobot.head.onSale ? 'sale-border' : ''},
-   
+      return this.selectedRobot.head.onSale ? "sale-border" : "";
+    }
   },
   methods: {
-    addToCart(){
-      
+    addToCart() {
       const robot = this.selectedRobot;
-      const cost = robot.head.cost + robot.leftArm.cost + 
-      robot.rightArm.cost + robot.torso.cost + 
-      robot.base.cost;
-      this.$store.commit('addRobotToCart', Object.assign( robot ,{ cost }));
+      const cost =
+        robot.head.cost +
+        robot.leftArm.cost +
+        robot.rightArm.cost +
+        robot.torso.cost +
+        robot.base.cost;
+      this.$store.commit("addRobotToCart", Object.assign(robot, { cost }));
       this.addedToCart = true;
-      
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style scoped>
-.part{
+.part {
   position: relative;
-  width:165px;
-  height:165px;
+  width: 165px;
+  height: 165px;
   border: 3px solid #aaa;
 }
 .part img {
-  
-  width:165px;
-  
+  width: 165px;
 }
- 
+
 .top-row {
-  display:flex;
+  display: flex;
   justify-content: center;
 }
 .middle-row {
-  display:flex;
+  display: flex;
   justify-content: center;
 }
 .bottom-row {
-  display:flex;
+  display: flex;
   justify-content: space-around;
   border-top: none;
 }
@@ -161,7 +160,7 @@ export default {
 }
 .prev-selector {
   position: absolute;
-  z-index:1;
+  z-index: 1;
   top: -3px;
   left: -28px;
   width: 25px;
@@ -169,14 +168,15 @@ export default {
 }
 .next-selector {
   position: absolute;
-  z-index:1;
+  z-index: 1;
   top: -3px;
   right: -28px;
   width: 25px;
   height: 171px;
 }
-.center .prev-selector, .center .next-selector {
-  opacity:0.8;
+.center .prev-selector,
+.center .next-selector {
+  opacity: 0.8;
 }
 .left .prev-selector {
   top: -28px;
@@ -207,28 +207,27 @@ export default {
 .right .next-selector {
   right: -3px;
 }
-.robot-name{
+.robot-name {
   position: absolute;
   top: -25px;
   text-align: center;
   width: 100%;
 }
-.sale{
+.sale {
   color: red;
 }
-.content{
+.content {
   position: relative;
-
 }
-.add-to-cart{
+.add-to-cart {
   position: absolute;
-  
-  width: 230px ;
+
+  width: 230px;
   padding: 3px;
   font-size: 16px;
 }
 
-.sale-border{
+.sale-border {
   border: 3px solid red;
 }
 .preview {
@@ -238,7 +237,6 @@ export default {
   width: 230px;
   height: 230px;
   padding: 5px;
-  
 }
 .preview-content {
   border: 2px solid #999;

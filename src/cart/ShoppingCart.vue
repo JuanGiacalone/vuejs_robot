@@ -15,37 +15,38 @@
       <tbody>
         <tr v-for="(robot, index) in cart" :key="index">
           <td class="robot-title">
-            {{robot.head.title}}
+            {{ robot.head.title }}
           </td>
           <td class="cost">
-            {{robot.cost}}
+            {{ robot.cost }}
           </td>
         </tr>
       </tbody>
     </table>
- </div>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'Cart',
+  name: "Cart",
   computed: {
-      cart() {
-          return this.$store.state.cart;
-      },
-  },
+    cart() {
+      return this.$store.state.cart;
+    }
+  }
 };
 </script>
 
 <style scoped>
-  td, th {
-    padding: 5px;
-  }
-  .robot-title {
-    text-align: left;
-    padding-right: 200px;
-  }
-  .cost {
-    text-align: right;
-  }
+td,
+th {
+  padding: 5px;
+}
+.robot-title {
+  text-align: left;
+  padding-right: 200px;
+}
+.cost {
+  text-align: right;
+}
 </style>

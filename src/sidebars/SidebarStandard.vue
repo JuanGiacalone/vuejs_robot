@@ -1,19 +1,19 @@
 <template>
-    <div class="sidebar">
-        Standard sidebar
-    </div>
+  <div class="sidebar">
+    Standard sidebar
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'Standard',
+  name: "Standard"
 };
 </script>
 
 <style scoped>
-    .sidebar{
-        font-size: 50px;
-        transform: rotate(90deg);
-        color: green;
-    }
+.sidebar {
+  font-size: 50px;
+  transform: rotate(90deg);
+  color: green;
+}
 </style>
