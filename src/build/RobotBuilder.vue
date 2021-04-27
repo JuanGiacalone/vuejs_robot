@@ -55,23 +55,6 @@
       position="bottom"
       @partSelected="part => selectedRobot.base=part"/>
     </div>
-    <div>
-      <h1>Cart</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Robot</th>
-            <th class="cost">Cost</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(robot,index) in cart" :key="index">
-            <td>{{robot.head.title}}</td>
-            <td class="cost">{{robot.cost}}</td>
-          </tr>
-        </tbody>
-      </table>
-      </div>
   </div>
 </template>
 
@@ -85,18 +68,28 @@ import CollapsibleSection from '../shared/CollapsibleSection.vue'
 export default {
   
   name: 'RobotBuilder',
+  beforeRouteLeave(to, from, next){
+    if (this.addedToCart){
+      next(true);
+    } else {
+      /* eslint no-alert: 0 */
+      /* eslint no-restricted-globals:0 */ 
+      const response = confirm('You have not added your robot! U Sure u Leaving?')
+      next(response)
+    }
+  },
   components: { PartSelector, CollapsibleSection },
   data() {
     return {
       availableParts,
-      cart: {},
+      addedToCart: false,
+      cart: [],
        selectedRobot: {
         head: {},
         leftArm: {},
         rightArm: {},
         torso: {},
         base: {},
-        cost: null,
       },
     };
   },
@@ -109,12 +102,14 @@ export default {
   },
   methods: {
     addToCart(){
-      console.log(this.selectedRobot.head.cost);
+      
       const robot = this.selectedRobot;
-      robot.cost = robot.head.cost + robot.leftArm.cost + 
+      const cost = robot.head.cost + robot.leftArm.cost + 
       robot.rightArm.cost + robot.torso.cost + 
       robot.base.cost;
-      this.cart.push(Object.assign.apply(robot,robot));
+      this.$store.commit('addRobotToCart', Object.assign( robot ,{ cost }));
+      this.addedToCart = true;
+      
     },
   },
 };
@@ -232,14 +227,7 @@ export default {
   padding: 3px;
   font-size: 16px;
 }
-td, th {
-  text-align: left;
-  padding: 5px;
-  padding-right: 20px;
-}
-.cost{
-  text-align: right;
-}
+
 .sale-border{
   border: 3px solid red;
 }
