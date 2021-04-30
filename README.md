@@ -58,3 +58,5 @@ conditional class returned from a computed function with top-part as defaults
 
 
 Instance Lifecycle : lifeclycle diagram (read more)
+
+ctrl + shift + H replaces some code with another in all files
